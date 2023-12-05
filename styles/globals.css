@@ -24,14 +24,6 @@ a {
   text-decoration: none;
 }
 
-#main-header {
-  margin: 0;
-  padding: 2rem 15%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 #main-header-loading {
   height: 2rem;
   margin-bottom: -2rem;
@@ -39,7 +31,7 @@ a {
   accent-color: #e30d7c;
 }
 
-#header-title {
+/* #header-title {
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -57,12 +49,7 @@ a {
   font-size: 1.5rem;
   color: #fff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-}
-
-#main-header nav {
-  display: flex;
-  gap: 1rem;
-}
+} */
 
 #overview-section {
   margin: -8rem 0 3rem 0;
