@@ -20,6 +20,10 @@ ul {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 #main-header {
   margin: 0;
   padding: 2rem 15%;
