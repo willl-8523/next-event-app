@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
@@ -7,6 +7,7 @@ export default function Document() {
         <link rel="icon" type="image/svg+xml" href="images/events-logo.png" />
       </Head>
       <body>
+        <div id="modal"></div>
         <Main />
         <NextScript />
       </body>
