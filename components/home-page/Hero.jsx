@@ -14,7 +14,7 @@ export default function EventsIntroSection() {
       </h2>
       <p>Anyone can organize and join events on React Event!</p>
       <p>
-        <Link legacyBehavior href="/events/new">
+        <Link legacyBehavior href="/events/new-event">
           <a className="button">Create your first event</a>
         </Link>
       </p>
