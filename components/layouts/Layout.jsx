@@ -7,7 +7,7 @@ export default function Layout(props) {
   const router = useRouter();
   const pathId = router.query.eventId;
   let content = (
-    <Link legacyBehavior href="/events/new">
+    <Link legacyBehavior href="/events/new-event">
       <a className="button">New Event</a>
     </Link>
   );
