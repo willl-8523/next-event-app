@@ -17,7 +17,7 @@ export default function EventItem({ event }) {
           <p className="event-item-location">{event.location}</p>
         </div>
         <p>
-          <Link legacyBehavior href="/events/${event.id}">
+          <Link legacyBehavior href={`/events/${event.id}`}>
             <a className="button">View Details</a>
           </Link>
         </p>
