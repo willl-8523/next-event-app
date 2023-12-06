@@ -33,56 +33,6 @@ const DUMMY_DATA = [
     location: 'Some Location',
     image: 'park.jpg',
   },
-  {
-    id: '9457',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In hac habitasse platea dictumst quisque sagittis purus. Ultricies mi quis hendrerit dolor magna eget est lorem ipsum.',
-    date: '2023-12-28',
-    time: '18:14',
-    location: 'Some Location',
-    image: 'park.jpg',
-  },
-  {
-    id: '9457',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In hac habitasse platea dictumst quisque sagittis purus. Ultricies mi quis hendrerit dolor magna eget est lorem ipsum.',
-    date: '2023-12-28',
-    time: '18:14',
-    location: 'Some Location',
-    image: 'park.jpg',
-  },
-  {
-    id: '9457',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In hac habitasse platea dictumst quisque sagittis purus. Ultricies mi quis hendrerit dolor magna eget est lorem ipsum.',
-    date: '2023-12-28',
-    time: '18:14',
-    location: 'Some Location',
-    image: 'park.jpg',
-  },
-  {
-    id: '9457',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In hac habitasse platea dictumst quisque sagittis purus. Ultricies mi quis hendrerit dolor magna eget est lorem ipsum.',
-    date: '2023-12-28',
-    time: '18:14',
-    location: 'Some Location',
-    image: 'park.jpg',
-  },
-  {
-    id: '9457',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In hac habitasse platea dictumst quisque sagittis purus. Ultricies mi quis hendrerit dolor magna eget est lorem ipsum.',
-    date: '2023-12-28',
-    time: '18:14',
-    location: 'Some Location',
-    image: 'park.jpg',
-  },
 ];
 
 export default function LastEvents() {
