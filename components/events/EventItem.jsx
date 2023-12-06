@@ -8,7 +8,7 @@ export default function EventItem({ event }) {
     year: 'numeric',
   });
   return (
-    <article className="event-item">
+    <article>
       <img src={`/images/${event.image}`} alt={event.title} />
       <div className="event-item-content">
         <div>
