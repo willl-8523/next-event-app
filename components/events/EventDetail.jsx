@@ -24,7 +24,7 @@ export default function EventDetails() {
           <h1>{DUMMY_DATA.title}</h1>
           <nav>
             <button>Delete</button>
-            <Link href="/edit">Edit</Link>
+            <Link href={`/events/${DUMMY_DATA.id}/edit`}>Edit</Link>
           </nav>
         </header>
         <div id="event-details-content">
