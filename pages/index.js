@@ -1,10 +1,22 @@
 import React from 'react';
 import Home from '../components/home-page/Home';
+import { getAllEvents } from '../utils/events-utils';
 
-export default function HomePage() {
+export default function HomePage({events}) {
   return (
     <>
-      <Home />
+      <Home lastEvents={events} />
     </>
   );
+}
+
+export async function getStaticProps() {
+  const events = await getAllEvents(4);
+
+  return {
+    props: {
+      events,
+    },
+    revalidate: 60,
+  };
 }

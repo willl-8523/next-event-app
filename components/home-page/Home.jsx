@@ -3,11 +3,11 @@ import Hero from './Hero';
 import LastEvents from './LastEvents';
 import SearchEvent from './SearchEvent';
 
-export default function Home() {
+export default function Home({lastEvents}) {
   return (
     <>
       <Hero />
-      <LastEvents />
+      <LastEvents lastEvents={lastEvents} />
       <SearchEvent />
     </>
   );
