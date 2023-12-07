@@ -4,13 +4,6 @@ import { createPortal } from 'react-dom';
 export default function Modal({ children, onClose }) {
   const dialog = useRef();
 
-//   if (typeof document === 'undefined') {
-//     console.error(
-//       "Le code d'accès au DOM ne doit être exécuté que côté client."
-//     );
-//     return null;
-//   }
-
   const portalRoot = document.getElementById('modal');
 
   if (!portalRoot) {
@@ -30,7 +23,7 @@ export default function Modal({ children, onClose }) {
   }, []);
 
   return createPortal(
-    <dialog className="modal" ref={dialog} onClose={onClose}>
+    <dialog className="modal" ref={dialog} onClick={onClose}>
       {children}
     </dialog>,
     portalRoot

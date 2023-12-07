@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import EventDetails from '../../../components/events/EventDetail';
-import NewEvent from '../../../components/events/NewEvent';
+import EditEvent from '../../../components/events/EditEvent';
 
 export default function EditEventPage() {
   return (
     <>
-      <NewEvent />
+      <EditEvent />
       <EventDetails />
     </>
   );

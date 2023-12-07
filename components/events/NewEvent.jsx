@@ -1,14 +1,16 @@
 import Link from 'next/link.js';
 import Modal from '../ui/Modal.jsx';
 import EventForm from './EventForm.jsx';
+import { useRouter } from 'next/router.js';
 
 export default function NewEvent() {
+  const router = useRouter();
   function handleSubmit(formData) {
     console.log('Submitted');
   }
 
   return (
-    <Modal onClose={() => navigate('../')}>
+    <Modal onClose={() => router.push('/')}>
       <EventForm onSubmit={handleSubmit}>
         <>
           <Link legacyBehavior href="../">
