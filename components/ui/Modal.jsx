@@ -4,6 +4,14 @@ import { createPortal } from 'react-dom';
 export default function Modal({ children, onClose }) {
   const dialog = useRef();
 
+  // Vérifier si le code s'exécute côté client
+  if (typeof document === 'undefined') {
+    console.error(
+      "Le document n'est pas défini. Le code doit s'exécuter côté client."
+    );
+    return null;
+  }
+
   const portalRoot = document.getElementById('modal');
 
   if (!portalRoot) {
@@ -23,7 +31,7 @@ export default function Modal({ children, onClose }) {
   }, []);
 
   return createPortal(
-    <dialog className="modal" ref={dialog} onClick={onClose}>
+    <dialog className="modal" ref={dialog} onClose={onClose}>
       {children}
     </dialog>,
     portalRoot
