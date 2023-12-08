@@ -3,7 +3,7 @@ import Modal from '../ui/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import { useRouter } from 'next/router.js';
 
-export default function NewEvent() {
+export default function NewEvent({ imagesFetched }) {
   const router = useRouter();
   function handleSubmit(formData) {
     console.log('Submitted');
@@ -11,7 +11,7 @@ export default function NewEvent() {
 
   return (
     <Modal onClose={() => router.push('/')}>
-      <EventForm onSubmit={handleSubmit}>
+      <EventForm onSubmit={handleSubmit} images={imagesFetched}>
         <>
           <Link legacyBehavior href="../">
             <a className="button-text">Cancel</a>

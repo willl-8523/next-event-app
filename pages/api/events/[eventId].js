@@ -1,10 +1,8 @@
 import fs from 'node:fs/promises';
-import path from 'node:path';
+import { filepath } from '.';
 
 async function handler(req, res) {
   const eventId = req.query.eventId;
-
-  const filepath = path.join(process.cwd(), 'data');
 
   const eventsData = await fs.readFile(filepath + '/events.json', 'utf8');
   const events = JSON.parse(eventsData);

@@ -2,30 +2,7 @@ import { useState } from 'react';
 
 import ImagePicker from '../ImagePicker.jsx';
 
-const DUMMY_IMAGE = [
-  {
-    path: 'buzzing-city.jpg',
-    caption: 'People walking through a city buzzing with life at night.',
-  },
-  {
-    path: 'laptop-on-desk.jpg',
-    caption: 'A laptop on a desk.',
-  },
-  {
-    path: 'meeting-networking.jpg',
-    caption: 'A group of people meeting and networking.',
-  },
-  {
-    path: 'park.jpg',
-    caption: 'A park with a lake.',
-  },
-  {
-    path: 'women-coding.jpg',
-    caption: 'A group of women coding.',
-  },
-];
-
-export default function EventForm({ inputData, onSubmit, children }) {
+export default function EventForm({ inputData, onSubmit, children, images }) {
   const [selectedImage, setSelectedImage] = useState(inputData?.image);
 
   function handleSelectImage(image) {
@@ -51,7 +28,7 @@ export default function EventForm({ inputData, onSubmit, children }) {
       </p>
       <div className="control">
         <ImagePicker
-          images={DUMMY_IMAGE}
+          images={images}
           onSelect={handleSelectImage}
           selectedImage={selectedImage}
         />

@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+export const filepath = path.join(process.cwd(), 'data');
+
 async function handler(req, res) {
-  const filepath = path.join(process.cwd(), 'data');
-//   const { max, search } = req.query;
   const { max } = req.query;
 
   try {
@@ -13,13 +13,6 @@ async function handler(req, res) {
     );
 
     let events = JSON.parse(eventsFileContent);
-
-    // if (search) {
-    //   events = events.filter((event) => {
-    //     const searchableText = `${event.title} ${event.description} ${event.location}`;
-    //     return searchableText.toLowerCase().includes(search.toLowerCase());
-    //   });
-    // }
 
     if (max) {
       events = events.slice(events.length - max, events.length);
