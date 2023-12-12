@@ -1,8 +1,13 @@
 const API_URL = 'http://localhost:3000/api/events';
 
-export async function getAllEvents(max) {
+export async function getAllEvents(max, searchTerm) {
   let url = API_URL;
-  if (max) {
+
+  if (searchTerm && max) {
+    url += '?search=' + searchTerm + '&max=' + max;
+  } else if (searchTerm) {
+    url += '?search=' + searchTerm;
+  } else if (max) {
     url += '?max=' + max;
   }
 

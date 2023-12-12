@@ -8,7 +8,7 @@ export default function NewEventPage(props) {
  
   useEffect(() => {
     setIsClient(true)
-  }, [])
+  }, []);
 
   return (
     <Fragment>
