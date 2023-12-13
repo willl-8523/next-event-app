@@ -7,7 +7,7 @@ export default function AllEventsPage({ events }) {
 }
 
 export async function getStaticProps() {
-  const events = await getAllEvents();
+  const events = await getAllEvents({max: null, searchTerm: null});
 
   return {
     props: {

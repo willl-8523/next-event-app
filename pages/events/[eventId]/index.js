@@ -39,7 +39,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const events = await getAllEvents();
+  const events = await getAllEvents({ max: null, searchTerm: null });
 
   const eventIds = events.map((event) => event.id);
 
