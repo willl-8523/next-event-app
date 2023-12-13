@@ -12,7 +12,10 @@ export default function EventForm({ inputData, onSubmit, children, images }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    console.log('Sumbmitted');
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    onSubmit({ ...data, image: selectedImage });
   }
 
   return (

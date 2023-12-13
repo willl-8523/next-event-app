@@ -2,11 +2,16 @@ import Link from 'next/link.js';
 import Modal from '../ui/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import { useRouter } from 'next/router.js';
+import { createNewEvent } from '../../utils/events-utils.js';
 
 export default function NewEvent({ imagesFetched }) {
   const router = useRouter();
-  function handleSubmit(formData) {
-    console.log('Submitted');
+
+  async function handleSubmit(formData) {
+    const response = await createNewEvent(formData);
+
+    console.log(router);
+    router.push('/');
   }
 
   return (

@@ -33,8 +33,7 @@ export async function getStaticProps(context) {
   return {
     props: {
       event: eventData,
-    },
-    revalidate: 30,
+    }
   };
 }
 
@@ -45,6 +44,6 @@ export async function getStaticPaths() {
 
   return {
     paths: eventIds.map((id) => ({ params: { eventId: id } })),
-    fallback: false,
+    fallback: 'blocking',
   };
 }
