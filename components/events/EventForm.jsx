@@ -21,7 +21,7 @@ export default function EventForm({ inputData, onSubmit, children, images }) {
   return (
     <form id="event-form" onSubmit={handleSubmit}>
       <p className="control">
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title">Title*</label>
         <input
           type="text"
           id="title"
@@ -38,7 +38,7 @@ export default function EventForm({ inputData, onSubmit, children, images }) {
       </div>
 
       <p className="control">
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Description*</label>
         <textarea
           id="description"
           name="description"
@@ -48,7 +48,7 @@ export default function EventForm({ inputData, onSubmit, children, images }) {
 
       <div className="controls-row">
         <p className="control">
-          <label htmlFor="date">Date</label>
+          <label htmlFor="date">Date*</label>
           <input
             type="date"
             id="date"
@@ -58,7 +58,7 @@ export default function EventForm({ inputData, onSubmit, children, images }) {
         </p>
 
         <p className="control">
-          <label htmlFor="time">Time</label>
+          <label htmlFor="time">Time*</label>
           <input
             type="time"
             id="time"
@@ -69,7 +69,7 @@ export default function EventForm({ inputData, onSubmit, children, images }) {
       </div>
 
       <p className="control">
-        <label htmlFor="location">Location</label>
+        <label htmlFor="location">Location*</label>
         <input
           type="text"
           id="location"

@@ -3,15 +3,21 @@ import Modal from '../ui/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import { useRouter } from 'next/router.js';
 import { createNewEvent } from '../../utils/events-utils.js';
+import ErrorBlock from '../ui/ErrorBlock.jsx';
+import { useState } from 'react';
 
 export default function NewEvent({ imagesFetched }) {
   const router = useRouter();
+  const [error, setError] = useState();
 
   async function handleSubmit(formData) {
-    const response = await createNewEvent(formData);
+    try {
+      const newEvent = await createNewEvent(formData);
 
-    console.log(router);
-    router.push('/');
+      router.push('/');
+    } catch (error) {
+      setError(error);
+    }
   }
 
   return (
@@ -26,6 +32,15 @@ export default function NewEvent({ imagesFetched }) {
           </button>
         </>
       </EventForm>
+      {error && (
+        <ErrorBlock
+          title="Failed to create event"
+          message={
+            error.info?.message ||
+            'Failed to create event. Please check your inputs and try again later'
+          }
+        />
+      )}
     </Modal>
   );
 }

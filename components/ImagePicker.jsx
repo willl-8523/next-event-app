@@ -1,7 +1,7 @@
 export default function ImagePicker({ images, selectedImage, onSelect }) {
   return (
     <div id="image-picker">
-      <p>Select an image</p>
+      <p>Select an image*</p>
       <ul>
         {images.map((image) => (
           <li
