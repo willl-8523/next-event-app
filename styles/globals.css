@@ -97,10 +97,13 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   gap: 3rem;
-  margin: 0 0 2rem 0;
+  margin: 2rem 0 2rem 0;
 }
 
 .event-item {
+  max-width: 20rem;
+  margin: auto;
+  height: 100%;
   padding: 0;
   border-radius: 4px;
   background-color: #3c4249;
@@ -110,8 +113,6 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 20rem;
-  margin: auto;
 }
 
 .event-item img {
@@ -466,7 +467,7 @@ a {
 @media (min-width: 768px) {
 
   .content-section header h2,
-  #all-events-section p {
+  .content-section .event-result {
     text-align: start;
   }
 

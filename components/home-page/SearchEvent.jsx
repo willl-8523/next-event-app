@@ -21,7 +21,7 @@ export default function SearchEvent() {
     }
   }, [searchTerm]);
 
-  let content = <p>Please enter a search term and to find events.</p>;
+  let content = <p className='event-result'>Please enter a search term and to find events.</p>;
 
   if (filteredEvents.length !== 0) {
     content = (
