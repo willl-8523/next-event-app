@@ -1,6 +1,6 @@
 const API_URL = 'http://localhost:3000/api/events';
 
-export async function getAllEvents({max, searchTerm}) {
+export async function getAllEvents({ max, searchTerm }) {
   let url = API_URL;
 
   if (searchTerm && max) {

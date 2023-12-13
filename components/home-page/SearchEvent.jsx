@@ -8,21 +8,18 @@ export default function SearchEvent() {
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   const fetchFileteredEvents = async () => {
-    const filteredEventResponse = await getAllEvents(null, searchTerm);
+    const filteredEventResponse = await getAllEvents({
+      max: null,
+      searchTerm: searchTerm,
+    });
     setFilteredEvents(filteredEventResponse);
   };
 
-  // useEffect(() => {
-  //   console.log('Rendering');
-  //   if (searchElement.current.value) {
-  //     const fetchFileteredEvents = async () => {
-  //       const filteredEventResponse = await getAllEvents(null, searchTerm);
-  //       setFilteredEvents(filteredEventResponse);
-  //     };
-
-  //     fetchFileteredEvents();
-  //   }
-  // }, [searchTerm]);
+  useEffect(() => {
+    if (searchTerm !== undefined) {
+      fetchFileteredEvents();
+    }
+  }, [searchTerm]);
 
   let content = <p>Please enter a search term and to find events.</p>;
 
@@ -40,7 +37,6 @@ export default function SearchEvent() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    fetchFileteredEvents();
     setSearchTerm(searchElement.current.value);
   }
 
