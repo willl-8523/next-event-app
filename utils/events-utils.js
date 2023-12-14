@@ -84,3 +84,22 @@ export async function createNewEvent(eventData) {
 
   return event;
 }
+
+export async function updateEvent({ id, event }) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({ id, ...event }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const error = new Error('An error occurred while updating the event');
+    error.code = response.status;
+    error.info = await response.json();
+    throw error;
+  }
+
+  return response.json();
+}

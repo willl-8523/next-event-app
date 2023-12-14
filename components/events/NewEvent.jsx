@@ -22,6 +22,15 @@ export default function NewEvent({ imagesFetched }) {
 
   return (
     <Modal onClose={() => router.push('/')}>
+      {error && (
+        <ErrorBlock
+          title="Failed to create event"
+          message={
+            error.info?.message ||
+            'Failed to create event. Please check your inputs and try again later'
+          }
+        />
+      )}
       <EventForm onSubmit={handleSubmit} images={imagesFetched}>
         <>
           <Link legacyBehavior href="../">
@@ -32,15 +41,6 @@ export default function NewEvent({ imagesFetched }) {
           </button>
         </>
       </EventForm>
-      {error && (
-        <ErrorBlock
-          title="Failed to create event"
-          message={
-            error.info?.message ||
-            'Failed to create event. Please check your inputs and try again later'
-          }
-        />
-      )}
     </Modal>
   );
 }

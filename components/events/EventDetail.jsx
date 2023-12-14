@@ -1,5 +1,5 @@
-export default function EventDetails({ date, image, title, location, time, description }) {
-  const formattedDate = new Date(date).toLocaleDateString('en-US', {
+export default function EventDetails({ event }) {
+  const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -7,15 +7,15 @@ export default function EventDetails({ date, image, title, location, time, descr
 
   return (
     <div id="event-details-content">
-      <img src={`/images/${image}`} alt={title} />
+      <img src={`/images/${event.image}`} alt={event.title} />
       <div id="event-details-info">
         <div>
-          <p id="event-details-location">{location}</p>
+          <p id="event-details-location">{event.location}</p>
           <time dateTime={`Todo-DateT$Todo-Time`}>
-            {formattedDate} @ {time}
+            {formattedDate} @ {event.time}
           </time>
         </div>
-        <p id="event-details-description">{description}</p>
+        <p id="event-details-description">{event.description}</p>
       </div>
     </div>
   );
