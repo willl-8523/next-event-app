@@ -12,14 +12,7 @@ export default function EventDetailsPage({ event }) {
           <Link href={`/events/${event.id}/edit`}>Edit</Link>
         </nav>
       </header>
-      <EventDetails
-        date={event.date}
-        image={event.image}
-        title={event.title}
-        location={event.location}
-        time={event.time}
-        description={event.description}
-      />
+      <EventDetails event={event} />
     </article>
   );
 }
@@ -33,7 +26,8 @@ export async function getStaticProps(context) {
   return {
     props: {
       event: eventData,
-    }
+    },
+    revalidate: 1,
   };
 }
 
@@ -44,6 +38,6 @@ export async function getStaticPaths() {
 
   return {
     paths: eventIds.map((id) => ({ params: { eventId: id } })),
-    fallback: 'blocking',
+    fallback: false,
   };
 }
