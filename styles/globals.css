@@ -355,6 +355,11 @@ a {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
+.button:disabled {
+  background-color: #f77ca9;
+  cursor: not-allowed;
+}
+
 .button-text {
   font: inherit;
   cursor: pointer;
