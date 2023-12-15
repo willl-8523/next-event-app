@@ -4,18 +4,25 @@ import EventForm from './EventForm.jsx';
 import { useRouter } from 'next/router.js';
 import { createNewEvent } from '../../utils/events-utils.js';
 import ErrorBlock from '../ui/ErrorBlock.jsx';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import NotificationContext from '../../store/notification-context.js';
 
 export default function NewEvent({ imagesFetched }) {
   const router = useRouter();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const notificationCtx = useContext(NotificationContext);
 
   async function handleSubmit(formData) {
     try {
       setIsLoading(true);
       const newEvent = await createNewEvent(formData);
       router.push('/');
+      notificationCtx.showNotification({
+        title: 'Success!',
+        message: 'Successfully added Event!',
+        status: 'success',
+      });
       setIsLoading(false);
     } catch (error) {
       setError(error);

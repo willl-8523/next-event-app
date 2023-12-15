@@ -1,10 +1,13 @@
 import Layout from '../components/layouts/Layout';
+import { NotificationContextProvider } from '../store/notification-context';
 import '../styles/globals.css';
 
 export default function App({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <NotificationContextProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </NotificationContextProvider>
   );
 }

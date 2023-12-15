@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from '../ui/Modal';
 
 export default function DeleteEvent({ onStopDelete, onDelete, loadingDelete }) {

@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { updateEvent } from '../../utils/events-utils.js';
 import Modal from '../ui/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import Link from 'next/link.js';
 import { useRouter } from 'next/navigation';
 import ErrorBlock from '../ui/ErrorBlock.jsx';
+import NotificationContext from '../../store/notification-context.js';
 
 export default function EditEvent({ images, event }) {
   const router = useRouter();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const notificationCtx = useContext(NotificationContext);
+  
 
   async function handleSubmit(formData) {
     try {
@@ -17,6 +20,11 @@ export default function EditEvent({ images, event }) {
       const newEvent = await updateEvent({ id: event.id, event: formData });
       router.push(`/events/${event.id}`);
       setIsLoading(false);
+      notificationCtx.showNotification({
+        title: 'Success!',
+        message: 'Successfully updated Event!',
+        status: 'success',
+      });
     } catch (error) {
       setError(error);
       setIsLoading(false);
