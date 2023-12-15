@@ -6,18 +6,12 @@ export default function Modal({ children, onClose }) {
 
   // Vérifier si le code s'exécute côté client
   if (typeof document === 'undefined') {
-    console.error(
-      "Le document n'est pas défini. Le code doit s'exécuter côté client."
-    );
     return null;
   }
 
   const portalRoot = document.getElementById('modal');
 
   if (!portalRoot) {
-    console.error(
-      "Le portail root avec l'ID 'portal-root' n'a pas été trouvé."
-    );
     return null;
   }
 

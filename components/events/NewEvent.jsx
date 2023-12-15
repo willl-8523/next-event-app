@@ -9,14 +9,17 @@ import { useState } from 'react';
 export default function NewEvent({ imagesFetched }) {
   const router = useRouter();
   const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(formData) {
     try {
+      setIsLoading(true);
       const newEvent = await createNewEvent(formData);
-
       router.push('/');
+      setIsLoading(false);
     } catch (error) {
       setError(error);
+      setIsLoading(false);
     }
   }
 
@@ -36,8 +39,8 @@ export default function NewEvent({ imagesFetched }) {
           <Link legacyBehavior href="../">
             <a className="button-text">Cancel</a>
           </Link>
-          <button type="submit" className="button">
-            Create
+          <button type="submit" className="button" disabled={isLoading}>
+            {isLoading ? 'Sending...' : 'Create'}
           </button>
         </>
       </EventForm>

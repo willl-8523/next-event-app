@@ -9,13 +9,17 @@ import ErrorBlock from '../ui/ErrorBlock.jsx';
 export default function EditEvent({ images, event }) {
   const router = useRouter();
   const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(formData) {
     try {
+      setIsLoading(true);
       const newEvent = await updateEvent({ id: event.id, event: formData });
       router.push(`/events/${event.id}`);
+      setIsLoading(false);
     } catch (error) {
       setError(error);
+      setIsLoading(false);
     }
   }
 
@@ -48,8 +52,8 @@ export default function EditEvent({ images, event }) {
             >
               <a className="button-text">Cancel</a>
             </Link>
-            <button type="submit" className="button">
-              Update
+            <button type="submit" className="button" disabled={isLoading}>
+              {isLoading ? 'Updating...' : 'Update'}
             </button>
           </>
         </EventForm>
