@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import EventDetails from '../../../components/events/EventDetail';
 import { fetchEvent, getAllEvents } from '../../../utils/events-utils';
+import ErrorPage from '../../_error';
 
-export default function EventDetailsPage({ event }) {
+export default function EventDetailsPage({ event, error }) {
+  if (error) {
+    return <ErrorPage statusCode={error} />;
+  }
+
   return (
     <article id="event-details">
       <header>
@@ -20,14 +25,20 @@ export default function EventDetailsPage({ event }) {
 export async function getStaticProps(context) {
   const { params } = context;
   const { eventId } = params;
+  let eventData = null;
+  let errorEventData = null;
 
-  const eventData = await fetchEvent(eventId);
+  try {
+    eventData = await fetchEvent(eventId);
+  } catch (error) {
+    errorEventData = error.code;
+  }
 
   return {
     props: {
       event: eventData,
+      error: errorEventData,
     },
-    revalidate: 1,
   };
 }
 
@@ -38,6 +49,6 @@ export async function getStaticPaths() {
 
   return {
     paths: eventIds.map((id) => ({ params: { eventId: id } })),
-    fallback: false,
+    fallback: 'blocking',
   };
 }
