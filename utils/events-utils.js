@@ -103,3 +103,18 @@ export async function updateEvent({ id, event }) {
 
   return response.json();
 }
+
+export async function deleteEvent({ id }) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    const error = new Error('An error occurred while deleting the event');
+    error.code = response.status;
+    error.info = await response.json();
+    throw error;
+  }
+
+  return response.json();
+}

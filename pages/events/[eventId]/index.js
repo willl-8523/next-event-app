@@ -1,24 +1,62 @@
 import Link from 'next/link';
 import EventDetails from '../../../components/events/EventDetail';
-import { fetchEvent, getAllEvents } from '../../../utils/events-utils';
+import {
+  deleteEvent,
+  fetchEvent,
+  getAllEvents,
+} from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
+import { useState } from 'react';
+import DeleteEvent from '../../../components/events/DeleteEvent';
+import { useRouter } from 'next/router';
 
 export default function EventDetailsPage({ event, error }) {
-  if (error) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [isError, setIsError] = useState(error);
+  const router = useRouter();
+
+  function handleStartDelete() {
+    setShowDeleteModal(true);
+  }
+
+  function handleStopDelete() {
+    setShowDeleteModal(false);
+  }
+
+  async function handleDelete() {
+    try {
+      setIsLoadingDelete(true);
+      const response = await deleteEvent({ id: event.id });
+      router.push('/');
+      setIsLoadingDelete(false);
+    } catch (error) {
+      console.log(error);
+      setIsError(error);
+      setIsLoadingDelete(false);
+    }
+  }
+
+  if (isError) {
     return <ErrorPage statusCode={error} />;
   }
 
   return (
-    <article id="event-details">
-      <header>
-        <h1>{event.title}</h1>
-        <nav>
-          <button>Delete</button>
-          <Link href={`/events/${event.id}/edit`}>Edit</Link>
-        </nav>
-      </header>
-      <EventDetails event={event} />
-    </article>
+    <>
+      {showDeleteModal && (
+        <DeleteEvent onStopDelete={handleStopDelete} onDelete={handleDelete} loadingDelete={isLoadingDelete} />
+      )}
+      <article id="event-details">
+        <header>
+          <h1>{event.title}</h1>
+          <nav>
+            <button onClick={handleStartDelete}>Delete</button>
+            <Link href={`/events/${event.id}/edit`}>Edit</Link>
+          </nav>
+        </header>
+        <EventDetails event={event} />
+      </article>
+    </>
   );
 }
 

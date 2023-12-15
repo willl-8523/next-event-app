@@ -5,7 +5,6 @@ async function handler(req, res) {
   const eventId = req.query.eventId;
 
   if (req.method === 'PUT') {
-    // const { id } = req.params;
     const event = req.body;
 
     if (!event) {
@@ -39,7 +38,24 @@ async function handler(req, res) {
 
     await fs.writeFile(filepath + '/events.json', JSON.stringify(events));
 
-    res.json({ event: events[eventIndex] });
+      res.json({ event: events[eventIndex] });
+  }
+
+  if (req.method === 'DELETE') {
+    const eventsFileContent = await fs.readFile(filepath + '/events.json');
+    const events = JSON.parse(eventsFileContent);
+
+    const eventIndex = events.findIndex((event) => event.id === eventId);
+
+    if (eventIndex === -1) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    events.splice(eventIndex, 1);
+
+    await fs.writeFile(filepath + '/events.json', JSON.stringify(events));
+
+    res.json({ message: 'Event deleted' });
   }
 
   const eventsData = await fs.readFile(filepath + '/events.json', 'utf8');
@@ -50,7 +66,7 @@ async function handler(req, res) {
   if (!event) {
     return res
       .status(404)
-      .json({ message: `For the id ${eventId}, no event could be found.` });
+      .json({ message: `No event could be found.` });
   }
 
   res.json({ event });
