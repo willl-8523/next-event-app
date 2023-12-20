@@ -240,6 +240,10 @@ a {
   object-fit: cover;
 }
 
+#event-details {
+  padding: 0 1rem;
+}
+
 #event-details header {
   max-width: 40rem;
   margin: 2rem auto;
