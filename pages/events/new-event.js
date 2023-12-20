@@ -2,8 +2,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 import NewEvent from '../../components/events/NewEvent';
 import Home from '../../components/home-page/Home';
 import { fetchImages, getAllEvents } from '../../utils/events-utils';
-import AllEventsPage from '.';
-
 export default function NewEventPage(props) {
   const [isClient, setIsClient] = useState(false)
  
@@ -14,7 +12,7 @@ export default function NewEventPage(props) {
   return (
     <Fragment>
       {isClient && <NewEvent imagesFetched={props.imagesFetched} />}
-      <AllEventsPage events={props.events} />
+      <Home />
     </Fragment>
   );
 }
