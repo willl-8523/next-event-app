@@ -11,6 +11,8 @@ export default function Layout(props) {
   const router = useRouter();
   const pathId = router.query.eventId;
 
+  const isErrorPage = router.pathname === '/_error';
+
   const notificationCtx = useContext(NotificationContext);
   const activeNotification = notificationCtx.notification;
 
@@ -18,19 +20,23 @@ export default function Layout(props) {
     modalCtx.setPath(router.pathname);
   }, [router]);
 
-  let content = (
-    <Link legacyBehavior href="/events/new-event">
-      <a className="button">New Event</a>
-    </Link>
-  );
-
-  if (pathId) {
+  let content;
+  if (pathId || isErrorPage) {
     content = (
       <Link legacyBehavior href="/events">
         <a className="nav-item">View All Events</a>
       </Link>
     );
+  } else if (!isErrorPage) {
+    content = (
+      <Link legacyBehavior href="/events/new-event">
+        <a className="button">
+          New Event
+        </a>
+      </Link>
+    );
   }
+
   return (
     <Fragment>
       <Header>{content}</Header>
