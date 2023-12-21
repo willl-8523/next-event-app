@@ -9,15 +9,17 @@ export function ModalContextProvider(props) {
   const [getPath, setGetPath] = useState();
 
   function setPath(pathName) {
-    setGetPath(pathName);
+    if (pathName === '/') {
+      setGetPath(pathName);
+    } else if (pathName === '/events') {
+      setGetPath(pathName);
+    }
   }
 
   const context = {
     path: getPath,
     setPath,
   };
-
-  console.log('Path: ', context.path);
 
   return (
     <ModalContext.Provider value={context}>
