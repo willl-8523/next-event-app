@@ -6,13 +6,26 @@ export default function SearchEvent() {
   const searchElement = useRef();
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [filteredEventsMessage, setFilteredEventsMessage] = useState(
+    'Please enter a search term and to find events.'
+  );
+
+  let content = <p className="event-result">{filteredEventsMessage}</p>;
 
   const fetchFileteredEvents = async () => {
-    const filteredEventResponse = await getAllEvents({
-      max: null,
-      searchTerm: searchTerm,
-    });
-    setFilteredEvents(filteredEventResponse);
+    try {
+      const filteredEventResponse = await getAllEvents({
+        max: null,
+        searchTerm: searchTerm,
+      });
+
+      if (filteredEventResponse.length === 0) {
+        setFilteredEventsMessage('Not result events');
+      }
+      setFilteredEvents(filteredEventResponse);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -21,9 +34,7 @@ export default function SearchEvent() {
     }
   }, [searchTerm]);
 
-  let content = <p className='event-result'>Please enter a search term and to find events.</p>;
-
-  if (filteredEvents.length !== 0) {
+  if (filteredEvents.length > 0) {
     content = (
       <ul className="events-list">
         {filteredEvents.map((event) => (
@@ -39,6 +50,8 @@ export default function SearchEvent() {
     event.preventDefault();
     setSearchTerm(searchElement.current.value);
   }
+
+  console.log('Content: ', content);
 
   return (
     <section className="content-section" id="all-events-section">
