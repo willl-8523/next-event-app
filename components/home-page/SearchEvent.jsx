@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import EventItem from '../events/EventItem';
 import { getAllEvents } from '../../utils/events-utils';
+import LoadingIndicator from '../ui/LoadingIndicator';
 
 export default function SearchEvent() {
   const searchElement = useRef();
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [filteredEventsMessage, setFilteredEventsMessage] = useState(
     'Please enter a search term and to find events.'
   );
@@ -13,6 +15,7 @@ export default function SearchEvent() {
   let content = <p className="event-result">{filteredEventsMessage}</p>;
 
   const fetchFileteredEvents = async () => {
+    setIsLoading(true);
     try {
       const filteredEventResponse = await getAllEvents({
         max: null,
@@ -23,8 +26,10 @@ export default function SearchEvent() {
         setFilteredEventsMessage('Not result events');
       }
       setFilteredEvents(filteredEventResponse);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -51,8 +56,6 @@ export default function SearchEvent() {
     setSearchTerm(searchElement.current.value);
   }
 
-  console.log('Content: ', content);
-
   return (
     <section className="content-section" id="all-events-section">
       <header>
@@ -66,7 +69,8 @@ export default function SearchEvent() {
           <button>Search</button>
         </form>
       </header>
-      {content}
+      {isLoading && <LoadingIndicator />}
+      {!isLoading && content}
     </section>
   );
 }
