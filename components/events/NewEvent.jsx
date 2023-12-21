@@ -6,8 +6,10 @@ import { createNewEvent } from '../../utils/events-utils.js';
 import ErrorBlock from '../ui/ErrorBlock.jsx';
 import { useContext, useState } from 'react';
 import NotificationContext from '../../store/notification-context.js';
+import ModalContext from '../../store/modal-context.js';
 
 export default function NewEvent({ imagesFetched }) {
+  const modalCtx = useContext(ModalContext);
   const router = useRouter();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +45,7 @@ export default function NewEvent({ imagesFetched }) {
       )}
       <EventForm onSubmit={handleSubmit} images={imagesFetched}>
         <>
-          <Link legacyBehavior href="../">
+          <Link legacyBehavior href={modalCtx.path}>
             <a className="button-text">Cancel</a>
           </Link>
           <button type="submit" className="button" disabled={isLoading}>
