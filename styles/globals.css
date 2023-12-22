@@ -493,4 +493,8 @@ a {
   #search-form {
     justify-content: start;
   }
+
+  .error-block {
+    justify-content: center;
+  }
 }
