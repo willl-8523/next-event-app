@@ -382,13 +382,18 @@ a {
 
 .error-block {
   background-color: #f0d9e5;
-  margin: 1rem 0;
+  margin: 1rem auto;
   padding: 1rem;
   border-radius: 4px;
   color: #890b35;
   display: flex;
   gap: 2rem;
   align-items: center;
+  text-align: left;
+  max-width: 40rem;
+}
+
+.error-block h2, .error-block p {
   text-align: left;
 }
 
@@ -496,5 +501,10 @@ a {
 
   .error-block {
     justify-content: center;
+  }
+
+  .error-block h2,
+  .error-block p {
+    text-align: left;
   }
 }
