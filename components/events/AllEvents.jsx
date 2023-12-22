@@ -1,9 +1,11 @@
-
 import EventItem from '../events/EventItem';
+import ErrorBlock from '../ui/ErrorBlock';
 
-export default function AllEvents({events}) {
+export default function AllEvents({ events, error }) {
   let content;
-
+  if (error) {
+    content = <ErrorBlock title="An error occurred" message={error.message} />;
+  }
   if (events) {
     content = (
       <ul className="events-list">
