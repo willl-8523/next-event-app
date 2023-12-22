@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import AllEvents from '../../components/events/AllEvents';
 import { getAllEvents } from '../../utils/events-utils';
+import Head from 'next/head';
 
 export default function AllEventsPage({ events, isError }) {
-  return <AllEvents events={events} error={isError} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>All Events</title>
+        <meta
+          name="description"
+          content="Find or add a lot of great events that allow to evolve..."
+        />
+      </Head>
+      <AllEvents events={events} error={isError} />
+    </Fragment>
+  );
 }
 
 export async function getStaticProps() {

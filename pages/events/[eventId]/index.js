@@ -10,6 +10,7 @@ import {
   getAllEvents,
 } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
+import Head from 'next/head';
 
 export default function EventDetailsPage({ event, error }) {
   const router = useRouter();
@@ -49,6 +50,11 @@ export default function EventDetailsPage({ event, error }) {
 
   return (
     <>
+      <Head>
+        <title>{event.title}</title>
+        <meta name="description" content={event.description} />
+      </Head>
+
       {showDeleteModal && (
         <DeleteEvent
           onStopDelete={handleStopDelete}

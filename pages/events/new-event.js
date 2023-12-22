@@ -5,6 +5,7 @@ import { fetchImages, getAllEvents } from '../../utils/events-utils';
 import ModalContext from '../../store/modal-context';
 import AllEvents from '../../components/events/AllEvents';
 import ErrorBlock from '../../components/ui/ErrorBlock';
+import Head from 'next/head';
 
 export default function NewEventPage(props) {
   const modalCtx = useContext(ModalContext);
@@ -24,6 +25,10 @@ export default function NewEventPage(props) {
 
   return (
     <Fragment>
+      <Head>
+        <title>New Event</title>
+        <meta name="description" content="Add new Event" />
+      </Head>
       {isClient && !props.isError && (
         <>
           <NewEvent imagesFetched={props.imagesFetched} />
@@ -34,7 +39,8 @@ export default function NewEventPage(props) {
         <ErrorBlock
           title="An error occurred"
           message={
-            props.isError.info?.message || 'Something went wrong to create event.'
+            props.isError.info?.message ||
+            'Something went wrong to create event.'
           }
         />
       )}

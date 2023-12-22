@@ -8,6 +8,10 @@ const ModalContext = createContext({
 export function ModalContextProvider(props) {
   const [getPath, setGetPath] = useState();
 
+  useEffect(() => {
+    setGetPath('/');
+  }, []);
+
   function setPath(pathName) {
     if (pathName === '/') {
       setGetPath(pathName);

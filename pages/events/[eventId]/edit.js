@@ -7,6 +7,7 @@ import {
   getAllEvents,
 } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
+import Head from 'next/head';
 
 export default function EditEventPage({ event }) {
   const [isClient, setIsClient] = useState(false);
@@ -22,6 +23,13 @@ export default function EditEventPage({ event }) {
 
   return (
     <>
+      <Head>
+        <title>{event.eventData.title}</title>
+        <meta
+          name="description"
+          content={`Edit ${event.eventData.description}`}
+        />
+      </Head>
       {isClient && <EditEvent images={event.images} event={event.eventData} />}
       <EventDetails event={event.eventData} error={isError} />
     </>
