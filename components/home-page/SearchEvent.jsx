@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import EventItem from '../events/EventItem';
 import { getAllEvents } from '../../utils/events-utils';
 import LoadingIndicator from '../ui/LoadingIndicator';
+import ErrorBlock from '../ui/ErrorBlock';
 
 export default function SearchEvent() {
   const searchElement = useRef();
@@ -11,6 +12,7 @@ export default function SearchEvent() {
   const [filteredEventsMessage, setFilteredEventsMessage] = useState(
     'Please enter a search term and to find events.'
   );
+  const [isError, setIsError] = useState(null);
 
   let content = <p className="event-result">{filteredEventsMessage}</p>;
 
@@ -29,6 +31,7 @@ export default function SearchEvent() {
       setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsError(error);
       setIsLoading(false);
     }
   };
@@ -38,6 +41,15 @@ export default function SearchEvent() {
       fetchFileteredEvents();
     }
   }, [searchTerm]);
+
+  if (isError) {
+    content = (
+      <ErrorBlock
+        title="An error occurred"
+        message={isError.info?.message || 'Failed to filtered events.'}
+      />
+    );
+  }
 
   if (filteredEvents.length > 0) {
     content = (

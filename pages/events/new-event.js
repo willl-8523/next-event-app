@@ -4,6 +4,7 @@ import Home from '../../components/home-page/Home';
 import { fetchImages, getAllEvents } from '../../utils/events-utils';
 import ModalContext from '../../store/modal-context';
 import AllEvents from '../../components/events/AllEvents';
+import ErrorBlock from '../../components/ui/ErrorBlock';
 
 export default function NewEventPage(props) {
   const modalCtx = useContext(ModalContext);
@@ -23,15 +24,46 @@ export default function NewEventPage(props) {
 
   return (
     <Fragment>
-      {isClient && <NewEvent imagesFetched={props.imagesFetched} />}
-      {outlet}
+      {isClient && !props.isError && (
+        <>
+          <NewEvent imagesFetched={props.imagesFetched} />
+          {outlet}
+        </>
+      )}
+      {isClient && props.isError && (
+        <ErrorBlock
+          title="An error occurred"
+          message={
+            props.isError.info?.message || 'Something went wrong to create event.'
+          }
+        />
+      )}
     </Fragment>
   );
 }
 
 export async function getStaticProps() {
-  const images = await fetchImages();
-  const events = await getAllEvents({ max: null, searchTerm: null });
+  let images = null;
+  let events = null;
+  let isError = null;
+
+  try {
+    images = await fetchImages();
+    events = await getAllEvents({ max: null, searchTerm: null });
+  } catch (error) {
+    isError = error;
+  }
+
+  if (isError) {
+    return {
+      props: {
+        isError: {
+          message:
+            isError.info?.message || 'Failed to fetch the latest events.',
+        },
+      },
+    };
+  }
 
   return {
     props: {
