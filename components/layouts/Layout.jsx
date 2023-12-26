@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment, useContext, useEffect } from 'react';
 import NotificationContext from '../../store/notification-context';
-import Notification from '../ui/notification';
+import Notification from '../ui/Notification';
 import Header from './Header';
 import ModalContext from '../../store/modal-context';
 

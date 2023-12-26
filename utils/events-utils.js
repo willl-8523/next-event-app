@@ -1,4 +1,4 @@
-const API_URL = `${process.env.API_URL}/api/events`;
+const API_URL = `http://localhost:3000/api/events`;
 
 export async function getAllEvents({ max, searchTerm }) {
   let url = API_URL;

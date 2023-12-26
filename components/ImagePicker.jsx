@@ -10,7 +10,7 @@ export default function ImagePicker({ images, selectedImage, onSelect }) {
             className={selectedImage === image.path ? 'selected' : undefined}
           >
             <img
-              src={`${process.env.API_URL}/images/${image.path}`}
+              src={`http://localhost:3000/images/${image.path}`}
               alt={image.caption}
             />
           </li>
