@@ -11,7 +11,11 @@ export default function LastEvents({ lastEvents, error }) {
     content = <ErrorBlock title="An error occurred" message={error.message} />;
   }
 
-  if (lastEvents) {
+  if (lastEvents.length === 0) {
+    content = <p> Not event yet!</p>;
+  }
+
+  if (lastEvents.length > 0) {
     content = (
       <ul className="events-list">
         {lastEvents.map((event) => (
