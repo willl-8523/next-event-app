@@ -10,7 +10,7 @@ export default function HomePage({ events }) {
         <title>Event App</title>
         <meta
           name="description"
-          content="Find or add a lot of great evetns that allow to evolve"
+          content="Find or add a lot of great events that allow to evolve"
         />
       </Head>
       <Home lastEvents={events} />
