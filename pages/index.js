@@ -2,6 +2,8 @@ import Head from 'next/head';
 import React from 'react';
 import Home from '../components/home-page/Home';
 import { getAllEvents } from '../utils/events-utils';
+import { getAllEventsLib } from '../utils/events-lib';
+
 
 export default function HomePage({ events }) {
   return (
@@ -19,7 +21,7 @@ export default function HomePage({ events }) {
 }
 
 export async function getServerSideProps(context) {
-  const events = await getAllEvents({ max: 4, search: null });
+  const events = await getAllEventsLib({ max: 4, search: null });
 
   if (!events) {
     return {
