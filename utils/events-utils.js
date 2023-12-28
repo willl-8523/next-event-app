@@ -1,4 +1,4 @@
-const API_URL = `http://localhost:3000/api/events`;
+const API_URL = `https://next-event-app-psi.vercel.app/api/events`;
 
 export async function getAllEvents({ max, searchTerm }) {
   let url = API_URL;
