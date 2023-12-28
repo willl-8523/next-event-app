@@ -33,3 +33,12 @@ export function getEvent(eventId) {
 
   return event;
 }
+
+export function getImages() {
+  const filepath = createPath('images.json');
+  const fileContent = fs.readFileSync(filepath, 'utf-8');
+
+  const images = JSON.parse(fileContent);
+
+  return images;
+}
