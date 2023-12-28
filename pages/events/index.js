@@ -1,7 +1,7 @@
+import Head from 'next/head';
 import React, { Fragment } from 'react';
 import AllEvents from '../../components/events/AllEvents';
 import { getAllEvents } from '../../utils/events-utils';
-import Head from 'next/head';
 
 export default function AllEventsPage({ events, isError }) {
   return (
@@ -18,7 +18,7 @@ export default function AllEventsPage({ events, isError }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   let events = null;
   let isError = null;
 
@@ -41,7 +41,6 @@ export async function getStaticProps() {
   return {
     props: {
       events,
-    },
-    revalidate: 60,
+    }
   };
 }

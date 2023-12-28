@@ -48,7 +48,7 @@ export default function NewEventPage(props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let images = null;
   let events = null;
   let lastEvents = null;
@@ -57,7 +57,7 @@ export async function getStaticProps() {
   try {
     images = await fetchImages();
     events = await getAllEvents({ max: null, searchTerm: null });
-    lastEvents = await getAllEvents({ max: null, searchTerm: null });
+    lastEvents = await getAllEvents({ max: 4, searchTerm: null });
   } catch (error) {
     isError = error;
   }

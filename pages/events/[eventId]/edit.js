@@ -1,13 +1,12 @@
+import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import EventDetails from '../../../components/events/EventDetail';
 import EditEvent from '../../../components/events/EditEvent';
+import EventDetails from '../../../components/events/EventDetail';
 import {
-  fetchImages,
   fetchEvent,
-  getAllEvents,
+  fetchImages
 } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
-import Head from 'next/head';
 
 export default function EditEventPage({ event }) {
   const [isClient, setIsClient] = useState(false);
@@ -36,7 +35,7 @@ export default function EditEventPage({ event }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const { params } = context;
   const { eventId } = params;
 
@@ -61,16 +60,5 @@ export async function getStaticProps(context) {
     props: {
       event: { eventData, images, errorEventData },
     },
-  };
-}
-
-export async function getStaticPaths() {
-  const events = await getAllEvents({ max: null, searchTerm: null });
-
-  const eventIds = events.map((event) => event.id);
-
-  return {
-    paths: eventIds.map((id) => ({ params: { eventId: id } })),
-    fallback: 'blocking',
   };
 }

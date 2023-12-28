@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
@@ -7,10 +8,8 @@ import NotificationContext from '../../../store/notification-context';
 import {
   deleteEvent,
   fetchEvent,
-  getAllEvents,
 } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
-import Head from 'next/head';
 
 export default function EventDetailsPage({ event, error }) {
   const router = useRouter();
@@ -76,7 +75,7 @@ export default function EventDetailsPage({ event, error }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const { params } = context;
   const { eventId } = params;
   let eventData = null;
@@ -93,16 +92,5 @@ export async function getStaticProps(context) {
       event: eventData,
       error: errorEventData,
     },
-  };
-}
-
-export async function getStaticPaths() {
-  const events = await getAllEvents({ max: null, searchTerm: null });
-
-  const eventIds = events.map((event) => event.id);
-
-  return {
-    paths: eventIds.map((id) => ({ params: { eventId: id } })),
-    fallback: 'blocking',
   };
 }
