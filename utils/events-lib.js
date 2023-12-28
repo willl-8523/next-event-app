@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 const eventsDirectory = path.join(process.cwd(), 'data');
-const allFiles = fs.readdirSync(eventsDirectory);
 const createPath = (file) => path.join(eventsDirectory, file);
 
 export function getAllEventsLib({ max, search }) {
@@ -25,4 +24,12 @@ export function getAllEventsLib({ max, search }) {
   }
 
   return events;
+}
+
+export function getEvent(eventId) {
+  const events = getAllEventsLib({ max: null, search: null });
+
+  const event = events.find((event) => event.id === eventId);
+
+  return event;
 }
