@@ -1,11 +1,11 @@
+import Head from 'next/head';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
+import AllEvents from '../../components/events/AllEvents';
 import NewEvent from '../../components/events/NewEvent';
 import Home from '../../components/home-page/Home';
-import { fetchImages, getAllEvents } from '../../utils/events-utils';
-import ModalContext from '../../store/modal-context';
-import AllEvents from '../../components/events/AllEvents';
 import ErrorBlock from '../../components/ui/ErrorBlock';
-import Head from 'next/head';
+import ModalContext from '../../store/modal-context';
+import { fetchImages, getAllEvents } from '../../utils/events-utils';
 
 export default function NewEventPage(props) {
   const modalCtx = useContext(ModalContext);
@@ -17,7 +17,7 @@ export default function NewEventPage(props) {
 
   let outlet;
   if (modalCtx.path === '/') {
-    outlet = <Home />;
+    outlet = <Home lastEvents={props.lastEvents} />;
   }
   if (modalCtx.path === '/events') {
     outlet = <AllEvents events={props.events} />;
@@ -51,11 +51,13 @@ export default function NewEventPage(props) {
 export async function getStaticProps() {
   let images = null;
   let events = null;
+  let lastEvents = null;
   let isError = null;
 
   try {
     images = await fetchImages();
     events = await getAllEvents({ max: null, searchTerm: null });
+    lastEvents = await getAllEvents({ max: null, searchTerm: null });
   } catch (error) {
     isError = error;
   }
@@ -75,6 +77,7 @@ export async function getStaticProps() {
     props: {
       imagesFetched: images,
       events,
+      lastEvents,
     },
   };
 }
