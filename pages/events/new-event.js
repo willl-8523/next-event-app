@@ -5,7 +5,7 @@ import NewEvent from '../../components/events/NewEvent';
 import Home from '../../components/home-page/Home';
 import ErrorBlock from '../../components/ui/ErrorBlock';
 import ModalContext from '../../store/modal-context';
-import { fetchImages, getAllEvents } from '../../utils/events-utils';
+import { getAllEventsLib, getImages } from '../../utils/events-lib';
 
 export default function NewEventPage(props) {
   const modalCtx = useContext(ModalContext);
@@ -49,20 +49,12 @@ export default function NewEventPage(props) {
 }
 
 export async function getServerSideProps() {
-  let images = null;
-  let events = null;
-  let lastEvents = null;
+  let images = getImages();
+  const events = getAllEventsLib({ max: null, search: null });
+  const lastEvents = getAllEventsLib({ max: 4, search: null });
   let isError = null;
 
-  try {
-    images = await fetchImages();
-    events = await getAllEvents({ max: null, searchTerm: null });
-    lastEvents = await getAllEvents({ max: 4, searchTerm: null });
-  } catch (error) {
-    isError = error;
-  }
-
-  if (isError) {
+  if (!images || !events || !lastEvents) {
     return {
       props: {
         isError: {
