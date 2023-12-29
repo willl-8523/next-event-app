@@ -7,6 +7,8 @@ import {
   fetchImages
 } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
+import { getEvent, getImages } from '../../../utils/events-lib';
+
 
 export default function EditEventPage({ event }) {
   const [isClient, setIsClient] = useState(false);
@@ -44,8 +46,8 @@ export async function getServerSideProps(context) {
   let images = null;
 
   try {
-    eventData = await fetchEvent(eventId);
-    images = await fetchImages();
+    eventData = getEvent(eventId);
+    images = getImages();
   } catch (error) {
     errorEventData = error.code;
   }
