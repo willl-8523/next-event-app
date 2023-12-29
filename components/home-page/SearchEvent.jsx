@@ -19,15 +19,13 @@ export default function SearchEvent() {
   const fetchFileteredEvents = async () => {
     setIsLoading(true);
     try {
-      const filteredEventResponse = await getAllEvents({
-        max: null,
-        searchTerm: searchTerm,
-      });
+      const response = await fetch(`api/events?search=${searchTerm}`);
+      const { events } = await response.json();
 
-      if (filteredEventResponse.length === 0) {
+      if (events.length === 0) {
         setFilteredEventsMessage('Not result events');
       }
-      setFilteredEvents(filteredEventResponse);
+      setFilteredEvents(events);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
