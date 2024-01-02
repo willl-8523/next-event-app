@@ -2,9 +2,9 @@ import fs from 'node:fs/promises';
 import { filepath } from '.';
 
 async function handler(req, res) {
-  
   if (req.method === 'POST') {
-    const event = req.body;
+    const { event } = req.body;
+
     if (!event) {
       return res.status(400).json({ message: 'Event is required' });
     }
