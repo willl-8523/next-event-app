@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { updateEvent } from '../../utils/events-utils.js';
 import Modal from '../ui/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import Link from 'next/link.js';
@@ -12,12 +11,19 @@ export default function EditEvent({ images, event }) {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const notificationCtx = useContext(NotificationContext);
-  
 
   async function handleSubmit(formData) {
+
     try {
       setIsLoading(true);
-      const newEvent = await updateEvent({ id: event.id, event: formData });
+      const updateEvent = await fetch(`/api/events/${event.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({id: event.id, ...formData}),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
       router.push(`/events/${event.id}`);
       setIsLoading(false);
       notificationCtx.showNotification({
@@ -51,7 +57,11 @@ export default function EditEvent({ images, event }) {
             />
           </>
         )}
-        <EventForm inputData={event} onSubmit={handleSubmit} images={images}>
+        <EventForm
+          inputData={event}
+          onSubmitEvent={handleSubmit}
+          images={images}
+        >
           <>
             <Link
               legacyBehavior
