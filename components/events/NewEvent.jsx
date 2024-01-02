@@ -18,20 +18,35 @@ export default function NewEvent({ imagesFetched }) {
   async function handleSubmit(formData) {
     try {
       setIsLoading(true);
-      const newEvent = await createNewEvent(formData);
-      router.push('/');
-      notificationCtx.showNotification({
-        title: 'Success!',
-        message: 'Successfully added Event!',
-        status: 'success',
+      const response = await fetch('/api/events/new-event', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-      setIsLoading(false);
+
+      if (!response.ok) {
+        const error = await response.json();
+        setError(error);
+        setIsLoading(false);
+      } else {
+        setError();
+        router.push('/');
+        notificationCtx.showNotification({
+          title: 'Success!',
+          message: 'Successfully added Event!',
+          status: 'success',
+        });
+        setIsLoading(false);
+      }
     } catch (error) {
       setError(error);
       setIsLoading(false);
     }
   }
 
+  console.log(error);
   return (
     <Modal onClose={() => router.push('/')}>
       {error && (
@@ -43,7 +58,7 @@ export default function NewEvent({ imagesFetched }) {
           }
         />
       )}
-      <EventForm onSubmit={handleSubmit} images={imagesFetched}>
+      <EventForm onSubmitEvent={handleSubmit} images={imagesFetched}>
         <>
           <Link legacyBehavior href={modalCtx.path}>
             <a className="button-text">Cancel</a>
