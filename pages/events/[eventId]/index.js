@@ -5,10 +5,8 @@ import { useContext, useState } from 'react';
 import DeleteEvent from '../../../components/events/DeleteEvent';
 import EventDetails from '../../../components/events/EventDetail';
 import NotificationContext from '../../../store/notification-context';
-import {
-  deleteEvent,
-  fetchEvent,
-} from '../../../utils/events-utils';
+import { getEvent } from '../../../utils/events-lib';
+import { deleteEvent } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
 
 export default function EventDetailsPage({ event, error }) {
@@ -82,7 +80,7 @@ export async function getServerSideProps(context) {
   let errorEventData = null;
 
   try {
-    eventData = await fetchEvent(eventId);
+    eventData = await getEvent(eventId);
   } catch (error) {
     errorEventData = error.code;
   }
