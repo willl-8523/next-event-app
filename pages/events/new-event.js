@@ -34,7 +34,7 @@ export default function NewEventPage(props) {
   async function handleSubmit(formData) {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/events/new-event', {
+      const response = await fetch('api/events/new-event', {
         method: 'POST',
         body: JSON.stringify(formData),
         headers: {
