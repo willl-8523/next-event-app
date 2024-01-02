@@ -30,7 +30,7 @@ async function handler(req, res) {
       ...event,
     };
     events.push(newEvent);
-    await fs.writeFile(filepath + '/events.json', JSON.stringify(events));
+    await fs.writeFile(filepath + '/events.json', JSON.stringify(events), 'utf-8');
     res.json({ event: newEvent });
   }
 }
