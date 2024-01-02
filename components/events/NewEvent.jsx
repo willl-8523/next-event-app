@@ -46,7 +46,6 @@ export default function NewEvent({ imagesFetched }) {
     }
   }
 
-  console.log(error);
   return (
     <Modal onClose={() => router.push('/')}>
       {error && (

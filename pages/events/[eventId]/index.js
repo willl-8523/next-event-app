@@ -27,14 +27,23 @@ export default function EventDetailsPage({ event, error }) {
   async function handleDelete() {
     try {
       setIsLoadingDelete(true);
-      const response = await deleteEvent({ id: event.id });
-      router.push('/');
-      notificationCtx.showNotification({
-        title: 'Success!',
-        message: 'Successfully deleted Event!',
-        status: 'success',
+      const response = await fetch(`/api/events/${event.id}`, {
+        method: 'DELETE',
       });
-      setIsLoadingDelete(false);
+
+      if (!response.ok) {
+        const error = await response.json();
+        setIsError(error);
+        setIsLoading(false);
+      } else {
+        router.push('/');
+        notificationCtx.showNotification({
+          title: 'Success!',
+          message: 'Successfully deleted Event!',
+          status: 'success',
+        });
+        setIsLoadingDelete(false);
+      }
     } catch (error) {
       setIsError(error);
       setIsLoadingDelete(false);
