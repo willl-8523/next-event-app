@@ -2,7 +2,6 @@ import Link from 'next/link.js';
 import Modal from '../ui/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import { useRouter } from 'next/router.js';
-import { createNewEvent } from '../../utils/events-utils.js';
 import ErrorBlock from '../ui/ErrorBlock.jsx';
 import { useContext, useState } from 'react';
 import NotificationContext from '../../store/notification-context.js';
