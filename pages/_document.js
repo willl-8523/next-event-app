@@ -7,7 +7,7 @@ export default function Document() {
         <link
           rel="icon"
           type="image/svg+xml"
-          href={`http://localhost:3000/images/events-logo.png`}
+          href={`/images/events-logo.png`}
         />
       </Head>
       <body>

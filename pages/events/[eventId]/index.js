@@ -6,7 +6,6 @@ import DeleteEvent from '../../../components/events/DeleteEvent';
 import EventDetails from '../../../components/events/EventDetail';
 import NotificationContext from '../../../store/notification-context';
 import { getEvent } from '../../../utils/events-lib';
-import { deleteEvent } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
 
 export default function EventDetailsPage({ event, error }) {

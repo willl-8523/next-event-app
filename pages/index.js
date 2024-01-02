@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
 import Home from '../components/home-page/Home';
-import { getAllEvents } from '../utils/events-utils';
 import { getAllEventsLib } from '../utils/events-lib';
 
 
