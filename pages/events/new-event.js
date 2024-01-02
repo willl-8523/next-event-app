@@ -34,7 +34,7 @@ export default function NewEventPage(props) {
   async function handleSubmit(formData) {
     try {
       setIsLoading(true);
-      const response = await fetch('api/events/new-event', {
+      const response = await fetch('/api/events/new-event', {
         method: 'POST',
         body: JSON.stringify(formData),
         headers: {
@@ -42,9 +42,10 @@ export default function NewEventPage(props) {
         },
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
-        setError(error);
+        setError(data);
         setIsLoading(false);
       } else {
         setError();
