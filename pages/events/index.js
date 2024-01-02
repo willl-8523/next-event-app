@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import React, { Fragment } from 'react';
 import AllEvents from '../../components/events/AllEvents';
-import { getAllEvents } from '../../utils/events-utils';
+import { getAllEventsLib } from '../../utils/events-lib';
+
 
 export default function AllEventsPage({ events, isError }) {
   return (
@@ -23,7 +24,7 @@ export async function getServerSideProps(context) {
   let isError = null;
 
   try {
-    events = await getAllEvents({ max: null, searchTerm: null });
+    events = await getAllEventsLib({ max: null, searchTerm: null });
   } catch (error) {
     isError = error;
   }
