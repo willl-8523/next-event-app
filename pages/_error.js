@@ -10,13 +10,14 @@ const ErrorPage = ({ statusCode }) => {
       break;
   
     default:
+      content = 'Something went wrong';
       break;
   }
 
   return (
     <div style={{textAlign: 'center'}}>
-      <h1>Erreur {statusCode} </h1>
-      <h3>{content}</h3>
+      <h1>Error {statusCode} </h1>
+      <h3>{content} </h3>
     </div>
   );
 };
