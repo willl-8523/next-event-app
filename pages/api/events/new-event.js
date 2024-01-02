@@ -2,6 +2,10 @@ import fs from 'node:fs/promises';
 import { filepath } from '.';
 
 async function handler(req, res) {
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS'
+  );
   if (req.method === 'POST') {
     const event = req.body;
 
@@ -30,7 +34,11 @@ async function handler(req, res) {
       ...event,
     };
     events.push(newEvent);
-    await fs.writeFile(filepath + '/events.json', JSON.stringify(events), 'utf-8');
+    await fs.writeFile(
+      filepath + '/events.json',
+      JSON.stringify(events),
+      'utf-8'
+    );
     res.json({ event: newEvent });
   }
 }
