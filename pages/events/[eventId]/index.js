@@ -85,6 +85,12 @@ export async function getServerSideProps(context) {
     errorEventData = error.code;
   }
 
+  if (!eventData) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       event: eventData,
