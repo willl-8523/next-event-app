@@ -1,11 +1,7 @@
-import fs from 'node:fs/promises';
+import { readFileSync, writeFileSync } from 'fs';
 import { filepath } from '.';
 
 async function handler(req, res) {
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, DELETE, OPTIONS'
-  );
   if (req.method === 'POST') {
     const event = req.body;
 
@@ -24,7 +20,7 @@ async function handler(req, res) {
       return res.status(400).json({ message: 'Invalid data provided.' });
     }
 
-    const eventsFileContent = await fs.readFile(
+    const eventsFileContent = readFileSync(
       filepath + '/events.json',
       'utf8'
     );
@@ -34,11 +30,13 @@ async function handler(req, res) {
       ...event,
     };
     events.push(newEvent);
-    await fs.writeFile(
+    writeFileSync(
       filepath + '/events.json',
       JSON.stringify(events),
       'utf-8'
     );
+
+    res.setHeader('Content-Type', 'application/json');
     res.json({ event: newEvent });
   }
 }

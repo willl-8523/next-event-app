@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import { readFileSync, writeFileSync } from 'fs';
 import { filepath } from '.';
 
 async function handler(req, res) {
@@ -19,10 +19,11 @@ async function handler(req, res) {
       !event.image?.trim() ||
       !event.location?.trim()
     ) {
+      res.setHeader('Content-Type', 'application/json');
       return res.status(400).json({ message: 'Invalid data provided.' });
     }
 
-    const eventsFileContent = await fs.readFile(filepath + '/events.json');
+    const eventsFileContent = readFileSync(filepath + '/events.json');
     const events = JSON.parse(eventsFileContent);
 
     const eventIndex = events.findIndex((event) => event.id === eventId);
@@ -36,13 +37,14 @@ async function handler(req, res) {
       ...event,
     };
 
-    await fs.writeFile(filepath + '/events.json', JSON.stringify(events));
+    writeFileSync(filepath + '/events.json', JSON.stringify(events));
 
-      res.json({ event: events[eventIndex] });
+    res.setHeader('Content-Type', 'application/json');
+    res.json({ event: events[eventIndex] });
   }
 
   if (req.method === 'DELETE') {
-    const eventsFileContent = await fs.readFile(filepath + '/events.json');
+    const eventsFileContent = readFileSync(filepath + '/events.json');
     const events = JSON.parse(eventsFileContent);
 
     const eventIndex = events.findIndex((event) => event.id === eventId);
@@ -53,22 +55,23 @@ async function handler(req, res) {
 
     events.splice(eventIndex, 1);
 
-    await fs.writeFile(filepath + '/events.json', JSON.stringify(events));
+    writeFileSync(filepath + '/events.json', JSON.stringify(events));
 
+    res.setHeader('Content-Type', 'application/json');
     res.json({ message: 'Event deleted' });
   }
 
-  const eventsData = await fs.readFile(filepath + '/events.json', 'utf8');
+  const eventsData = readFileSync(filepath + '/events.json', 'utf8');
   const events = JSON.parse(eventsData);
 
   const event = events.find((event) => event.id === eventId);
 
   if (!event) {
-    return res
-      .status(404)
-      .json({ message: `No event could be found.` });
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(404).json({ message: `No event could be found.` });
   }
 
+  res.setHeader('Content-Type', 'application/json');
   res.json({ event });
 }
 
