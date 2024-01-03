@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import fs from 'fs';
 import { filepath } from '.';
 
 async function handler(req, res) {
@@ -20,21 +20,27 @@ async function handler(req, res) {
       return res.status(400).json({ message: 'Invalid data provided.' });
     }
 
-    const eventsFileContent = readFileSync(filepath + '/events.json', 'utf8');
+    const eventsFileContent = fs.readFileSync(
+      filepath + '/events.json',
+      'utf8'
+    );
     const events = JSON.parse(eventsFileContent);
     const newEvent = {
       id: Math.round(Math.random() * 10000) + new Date().toISOString(),
       ...event,
     };
     events.push(newEvent);
-    writeFileSync(
-      filepath + '/events.json',
-      JSON.stringify(events),
-      { flag: 'w' },
-      'utf-8'
-    );
 
-    res.setHeader('Content-Type', 'application/json');
+    try {
+      fs.writeFileSync(
+        filepath + '/events.json',
+        JSON.stringify(events),
+        { flag: 'w' }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+
     res.json({ event: newEvent });
   }
 }

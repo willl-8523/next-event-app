@@ -1,8 +1,8 @@
-import fs from 'node:fs/promises';
+import fs from 'fs';
 import { filepath } from '.';
 
 export async function handler(req, res) {
-  const imagesFileContent = await fs.readFile(
+  const imagesFileContent = fs.readFileSync(
     filepath + '/images.json',
     'utf8'
   );

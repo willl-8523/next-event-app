@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import fs from 'fs';
 import { filepath } from '.';
 
 async function handler(req, res) {
@@ -19,11 +19,13 @@ async function handler(req, res) {
       !event.image?.trim() ||
       !event.location?.trim()
     ) {
-      res.setHeader('Content-Type', 'application/json');
       return res.status(400).json({ message: 'Invalid data provided.' });
     }
 
-    const eventsFileContent = readFileSync(filepath + '/events.json');
+    const eventsFileContent = fs.readFileSync(
+      filepath + '/events.json',
+      'utf8'
+    );
     const events = JSON.parse(eventsFileContent);
 
     const eventIndex = events.findIndex((event) => event.id === eventId);
@@ -37,16 +39,22 @@ async function handler(req, res) {
       ...event,
     };
 
-    writeFileSync(filepath + '/events.json', JSON.stringify(events), {
-      flag: 'w',
-    });
+    try {
+      fs.writeFileSync(filepath + '/events.json', JSON.stringify(events), {
+        flag: 'w',
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
-    res.setHeader('Content-Type', 'application/json');
     res.json({ event: events[eventIndex] });
   }
 
   if (req.method === 'DELETE') {
-    const eventsFileContent = readFileSync(filepath + '/events.json');
+    const eventsFileContent = fs.readFileSync(
+      filepath + '/events.json',
+      'utf-8'
+    );
     const events = JSON.parse(eventsFileContent);
 
     const eventIndex = events.findIndex((event) => event.id === eventId);
@@ -57,25 +65,26 @@ async function handler(req, res) {
 
     events.splice(eventIndex, 1);
 
-    writeFileSync(filepath + '/events.json', JSON.stringify(events), {
-      flag: 'w',
-    });
+    try {
+      fs.writeFileSync(filepath + '/events.json', JSON.stringify(events), {
+        flag: 'w',
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
-    res.setHeader('Content-Type', 'application/json');
     res.json({ message: 'Event deleted' });
   }
 
-  const eventsData = readFileSync(filepath + '/events.json', 'utf8');
+  const eventsData = fs.readFileSync(filepath + '/events.json', 'utf8');
   const events = JSON.parse(eventsData);
 
   const event = events.find((event) => event.id === eventId);
 
   if (!event) {
-    res.setHeader('Content-Type', 'application/json');
     return res.status(404).json({ message: `No event could be found.` });
   }
 
-  res.setHeader('Content-Type', 'application/json');
   res.json({ event });
 }
 

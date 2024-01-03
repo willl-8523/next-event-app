@@ -1,13 +1,13 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import fs from 'fs';
+import path from 'path';
 
-export const filepath = path.join(process.cwd(), 'data');
+export const filepath = path.resolve(path.join(process.cwd(), 'data'));
 
 async function handler(req, res) {
   const { max, search } = req.query;
 
   try {
-    const eventsFileContent = await fs.readFile(
+    const eventsFileContent = fs.readFileSync(
       filepath + '/events.json',
       'utf8'
     );
