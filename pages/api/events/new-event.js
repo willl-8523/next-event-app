@@ -20,10 +20,7 @@ async function handler(req, res) {
       return res.status(400).json({ message: 'Invalid data provided.' });
     }
 
-    const eventsFileContent = readFileSync(
-      filepath + '/events.json',
-      'utf8'
-    );
+    const eventsFileContent = readFileSync(filepath + '/events.json', 'utf8');
     const events = JSON.parse(eventsFileContent);
     const newEvent = {
       id: Math.round(Math.random() * 10000) + new Date().toISOString(),
@@ -33,6 +30,7 @@ async function handler(req, res) {
     writeFileSync(
       filepath + '/events.json',
       JSON.stringify(events),
+      { flag: 'w' },
       'utf-8'
     );
 

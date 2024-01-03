@@ -37,7 +37,9 @@ async function handler(req, res) {
       ...event,
     };
 
-    writeFileSync(filepath + '/events.json', JSON.stringify(events));
+    writeFileSync(filepath + '/events.json', JSON.stringify(events), {
+      flag: 'w',
+    });
 
     res.setHeader('Content-Type', 'application/json');
     res.json({ event: events[eventIndex] });
@@ -55,7 +57,9 @@ async function handler(req, res) {
 
     events.splice(eventIndex, 1);
 
-    writeFileSync(filepath + '/events.json', JSON.stringify(events));
+    writeFileSync(filepath + '/events.json', JSON.stringify(events), {
+      flag: 'w',
+    });
 
     res.setHeader('Content-Type', 'application/json');
     res.json({ message: 'Event deleted' });
