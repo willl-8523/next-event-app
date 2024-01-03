@@ -16,7 +16,12 @@ export async function insertDocument(client, collection, document) {
   return result;
 }
 
-export async function getAllDocuments(client, collection, sort, filter = {}) {
+export async function getAllDocuments(
+  client,
+  collection,
+  sort = {},
+  filter = {}
+) {
   const db = client.db();
 
   /**
@@ -28,6 +33,18 @@ export async function getAllDocuments(client, collection, sort, filter = {}) {
     .find(filter)
     .sort(sort)
     .toArray();
+
+  return documents;
+}
+
+export async function fetchDataBase(client, collection) {
+  const db = client.db();
+
+  /**
+   * retrieve all data from the 'comments' collection in
+   * descending order and transform them into an array
+   */
+  const documents = await db.collection(collection);
 
   return documents;
 }
