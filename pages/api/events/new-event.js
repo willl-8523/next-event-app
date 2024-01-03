@@ -1,7 +1,15 @@
-import fs from 'fs';
-import { filepath } from '.';
+import { connectDatabase, insertDocument } from '../../../utils/db-utils';
 
 async function handler(req, res) {
+  let client;
+
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res.status(500).json({ message: 'Connecting to the database failed!' });
+    return;
+  }
+
   if (req.method === 'POST') {
     const event = req.body;
 
@@ -17,32 +25,36 @@ async function handler(req, res) {
       !event.image?.trim() ||
       !event.location?.trim()
     ) {
-      return res.status(400).json({ message: 'Invalid data provided.' });
+      res.status(400).json({ message: 'Invalid data provided.' });
+      client.close();
+      return;
     }
 
-    const eventsFileContent = fs.readFileSync(
-      filepath + '/events.json',
-      'utf8'
-    );
-    const events = JSON.parse(eventsFileContent);
     const newEvent = {
-      id: Math.round(Math.random() * 10000) + new Date().toISOString(),
-      ...event,
+      title: event.title,
+      description: event.description,
+      date: event.date,
+      time: event.time,
+      image: event.image,
+      location: event.location,
     };
-    events.push(newEvent);
+
+    let result;
 
     try {
-      fs.writeFileSync(
-        filepath + '/events.json',
-        JSON.stringify(events),
-        { flag: 'w' }
-      );
-    } catch (error) {
-      console.error(error);
-    }
+      result = await insertDocument(client, 'events', newEvent);
 
-    res.json({ event: newEvent });
+      // Add id property in newComment
+      newEvent.id = result.insertedId;
+
+      res.status(201).json({ message: 'Added comment', event: newEvent });
+    } catch (error) {
+      res.status(500).json({ message: 'Inserting event failed!' });
+      return;
+    }
   }
+
+  client.close();
 }
 
 export default handler;
