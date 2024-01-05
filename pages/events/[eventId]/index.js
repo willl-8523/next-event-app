@@ -72,7 +72,9 @@ export default function EventDetailsPage({ event, error }) {
           <h1>{event.title}</h1>
           <nav>
             <button onClick={handleStartDelete}>Delete</button>
-            <Link href={`/events/${event.id}/edit`}>Edit</Link>
+            <Link legacyBehavior href={`/events/edit/${event.id}`}>
+              <a>Edit</a>
+            </Link>
           </nav>
         </header>
         <EventDetails event={event} />
@@ -85,7 +87,7 @@ export async function getStaticPaths() {
   const events = await getAllEvents({ max: null, searchTerm: null });
 
   return {
-    paths: events.map((event) => ({
+    paths: (events).map((event) => ({
       params: { eventId: event._id.toString() },
     })),
     fallback: 'blocking',

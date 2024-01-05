@@ -16,7 +16,7 @@ export default function EditEvent({ images, event }) {
     try {
       setIsLoading(true);
       const response = await fetch(`/api/events/${event.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify({ id: event.id, ...formData }),
         headers: {
           'Content-Type': 'application/json',

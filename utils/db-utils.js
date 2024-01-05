@@ -41,11 +41,8 @@ export async function getDocument(client, collection, filter) {
   const db = client.db();
   try {
     const eventDoc = await db.collection(collection).findOne(filter);
-
-    client.close();
     return eventDoc;
   } catch (error) {
-    client.close();
     throw Error('Getting event failed.');
   }
 }

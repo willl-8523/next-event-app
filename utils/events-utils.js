@@ -1,5 +1,7 @@
 import { connectDatabase, getAllDocuments, getDocument } from './db-utils';
 import { ObjectId } from 'mongodb';
+import fs from 'fs';
+import path from 'path';
 
 export async function getAllEvents({ max, searchTerm }) {
   let client;
@@ -52,6 +54,17 @@ export async function getEvent(eventId) {
     client.close();
     throw Error('Getting event failed.');
   }
+
+}
+
+export function getImages() {
+  const eventsDirectory = path.join(process.cwd(), 'data');
+  const createPath = path.join(eventsDirectory, 'images.json');
+  const fileContent = fs.readFileSync(createPath, 'utf-8');
+
+  const images = JSON.parse(fileContent);
+
+  return images;
 }
 
 // const API_URL = `/api/events`;
