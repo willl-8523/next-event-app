@@ -20,7 +20,7 @@ export default function HomePage({ events }) {
 
 export async function getStaticProps() {
   const events = await getAllEvents({ max: 4, searchTerm: null });
-
+  
   if (!events) {
     return {
       notFound: true,
@@ -29,7 +29,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      events: (await events.reverse()).map((event) => ({
+      events: (await events).map((event) => ({
         id: event._id.toString(),
         title: event.title,
         description: event.description,

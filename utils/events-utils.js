@@ -22,7 +22,7 @@ export async function getAllEvents({ max, searchTerm }) {
     }
 
     if (max) {
-      events = events.slice(events.length - max, events.length);
+      events = events.slice(0, events.length - max);
     }
     client.close();
     return events;

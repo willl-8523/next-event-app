@@ -19,7 +19,7 @@ export async function insertDocument(client, collection, document) {
 export async function getAllDocuments(
   client,
   collection,
-  sort = {},
+  sort,
   filter = {}
 ) {
   const db = client.db();
