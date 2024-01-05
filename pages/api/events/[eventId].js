@@ -1,7 +1,8 @@
 import {
   connectDatabase,
-  fetchDataBase,
+  deleteDocument,
   getAllDocuments,
+  updateDocument,
 } from '../../../utils/db-utils';
 import { ObjectId } from 'mongodb';
 
@@ -31,7 +32,7 @@ async function handler(req, res) {
     }
   }
 
-  if (req.method === 'PUT') {
+  if (req.method === 'PATCH') {
     const updateEventData = req.body;
 
     if (!updateEventData) {
@@ -50,13 +51,13 @@ async function handler(req, res) {
     }
 
     try {
-      // const
-      const events = await fetchDataBase(client, 'events');
-      const filter = { _id: new ObjectId(eventId) };
-      const options = { upsert: true };
-      const updateDoc = { $set: { ...updateEventData } };
-
-      const updatedData = await events.updateOne(filter, updateDoc, options);
+      const updatedData = await updateDocument(
+        client,
+        'events',
+        { _id: new ObjectId(eventId) },
+        { $set: { ...updateEventData } },
+        { upsert: true }
+      );
 
       return res.json({ event: updatedData });
     } catch (error) {
@@ -64,42 +65,17 @@ async function handler(req, res) {
     }
   }
 
-  // if (req.method === 'DELETE') {
-  //   const eventsFileContent = fs.readFileSync(
-  //     filepath + '/events.json',
-  //     'utf-8'
-  //   );
-  //   const events = JSON.parse(eventsFileContent);
+  if (req.method === 'DELETE') {
+    try {
+      const deletedData = await deleteDocument(client, 'events', {
+        _id: new ObjectId(eventId),
+      });
+      res.json({ deletedData, message: 'Event deleted' });
+    } catch (error) {
+      return res.status(500).json({ message: 'Delete event failed.' });
+    }
+  }
 
-  //   const eventIndex = events.findIndex((event) => event.id === eventId);
-
-  //   if (eventIndex === -1) {
-  //     return res.status(404).json({ message: 'Event not found' });
-  //   }
-
-  //   events.splice(eventIndex, 1);
-
-  //   try {
-  //     fs.writeFileSync(filepath + '/events.json', JSON.stringify(events), {
-  //       flag: 'w',
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-
-  //   res.json({ message: 'Event deleted' });
-  // }
-
-  // const eventsData = fs.readFileSync(filepath + '/events.json', 'utf8');
-  // const events = JSON.parse(eventsData);
-
-  // const event = events.find((event) => event.id === eventId);
-
-  // if (!event) {
-  //   return res.status(404).json({ message: `No event could be found.` });
-  // }
-
-  // res.json({ event });
   client.close();
 }
 
