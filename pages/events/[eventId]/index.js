@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import DeleteEvent from '../../../components/events/DeleteEvent';
 import EventDetails from '../../../components/events/EventDetail';
 import NotificationContext from '../../../store/notification-context';
-import { getEvent } from '../../../utils/events-lib';
+import { getAllEvents, getEvent } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
 
 export default function EventDetailsPage({ event, error }) {
@@ -81,19 +81,28 @@ export default function EventDetailsPage({ event, error }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const { eventId } = params;
-  let eventData = null;
-  let errorEventData = null;
+export async function getStaticPaths() {
+  const events = await getAllEvents({ max: null, searchTerm: null });
+
+  return {
+    paths: events.map((event) => ({
+      params: { eventId: event._id.toString() },
+    })),
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps(context) {
+  const eventId = context.params.eventId;
+  let event = null;
 
   try {
-    eventData = await getEvent(eventId);
+    event = await getEvent(eventId);
   } catch (error) {
-    errorEventData = error.code;
+    console.error(error);
   }
 
-  if (!eventData) {
+  if (!event) {
     return {
       notFound: true,
     };
@@ -101,8 +110,15 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      event: eventData,
-      error: errorEventData,
+      event: {
+        id: event._id.toString(),
+        title: event.title,
+        description: event.description,
+        date: event.date,
+        time: event.time,
+        image: event.image,
+        location: event.location,
+      },
     },
   };
 }

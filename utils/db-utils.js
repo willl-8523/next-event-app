@@ -37,7 +37,26 @@ export async function getAllDocuments(
   return documents;
 }
 
-export async function updateDocument(client, collection, filter, document, options) {
+export async function getDocument(client, collection, filter) {
+  const db = client.db();
+  try {
+    const eventDoc = await db.collection(collection).findOne(filter);
+
+    client.close();
+    return eventDoc;
+  } catch (error) {
+    client.close();
+    throw Error('Getting event failed.');
+  }
+}
+
+export async function updateDocument(
+  client,
+  collection,
+  filter,
+  document,
+  options
+) {
   const db = client.db();
 
   const updatedData = await db
@@ -54,4 +73,3 @@ export async function deleteDocument(client, collection, filter) {
 
   return deletedData;
 }
-

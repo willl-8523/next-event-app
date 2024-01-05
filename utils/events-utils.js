@@ -1,4 +1,5 @@
-import { connectDatabase, getAllDocuments } from './db-utils';
+import { connectDatabase, getAllDocuments, getDocument } from './db-utils';
+import { ObjectId } from 'mongodb';
 
 export async function getAllEvents({ max, searchTerm }) {
   let client;
@@ -6,7 +7,7 @@ export async function getAllEvents({ max, searchTerm }) {
   try {
     client = await connectDatabase();
   } catch (error) {
-    throw Error('Getting events failed.');
+    throw Error('Failed to connect database');
   }
 
   try {
@@ -29,7 +30,28 @@ export async function getAllEvents({ max, searchTerm }) {
     client.close();
     throw Error('Getting events failed.');
   }
+}
 
+export async function getEvent(eventId) {
+  let client;
+
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    throw Error('Failed to connect to database.');
+  }
+
+  try {
+    const event = await getDocument(client, 'events', {
+      _id: new ObjectId(eventId),
+    });
+    
+    client.close();
+    return event;
+  } catch (error) {
+    client.close();
+    throw Error('Getting event failed.');
+  }
 }
 
 // const API_URL = `/api/events`;
