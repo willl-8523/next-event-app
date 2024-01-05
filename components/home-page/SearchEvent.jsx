@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import EventItem from '../events/EventItem';
-import { getAllEvents } from '../../utils/events-utils';
 import LoadingIndicator from '../ui/LoadingIndicator';
 import ErrorBlock from '../ui/ErrorBlock';
 
