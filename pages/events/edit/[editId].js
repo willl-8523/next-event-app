@@ -32,34 +32,6 @@ export default function EditEventPage({ event, images, errorEventData }) {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const { params } = context;
-//   const { eventId } = params;
-
-//   let eventData = null;
-//   let errorEventData = null;
-//   let images = null;
-
-//   try {
-//     eventData = getEvent(eventId);
-//     images = getImages();
-//   } catch (error) {
-//     errorEventData = error.code;
-//   }
-
-//   if (!eventData) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-
-//   return {
-//     props: {
-//       event: { eventData, images, errorEventData },
-//     },
-//   };
-// }
-
 export async function getStaticProps(context) {
   const { params } = context;
   const { editId } = params;
@@ -95,6 +67,7 @@ export async function getStaticProps(context) {
       images,
       errorEventData,
     },
+    revalidate: 1,
   };
 }
 

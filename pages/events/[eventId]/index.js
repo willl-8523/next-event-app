@@ -87,7 +87,7 @@ export async function getStaticPaths() {
   const events = await getAllEvents({ max: null, searchTerm: null });
 
   return {
-    paths: (events).map((event) => ({
+    paths: events.map((event) => ({
       params: { eventId: event._id.toString() },
     })),
     fallback: 'blocking',
@@ -122,5 +122,6 @@ export async function getStaticProps(context) {
         location: event.location,
       },
     },
+    revalidate: 1,
   };
 }
