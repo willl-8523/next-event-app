@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import React, { Fragment } from 'react';
 import AllEvents from '../../components/events/AllEvents';
-import { getAllEventsLib } from '../../utils/events-lib';
-
+import { getAllEvents } from '../../utils/events-utils';
 
 export default function AllEventsPage({ events, isError }) {
   return (
@@ -19,12 +18,12 @@ export default function AllEventsPage({ events, isError }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps() {
   let events = null;
   let isError = null;
 
   try {
-    events = await getAllEventsLib({ max: null, searchTerm: null });
+    events = await getAllEvents({ max: null, searchTerm: null });
   } catch (error) {
     isError = error;
   }
@@ -41,7 +40,16 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      events,
-    }
+      events: (await events).map((event) => ({
+        id: event._id.toString(),
+        title: event.title,
+        description: event.description,
+        date: event.date,
+        time: event.time,
+        image: event.image,
+        location: event.location,
+      })),
+    },
+    revalidate: 1,
   };
 }
