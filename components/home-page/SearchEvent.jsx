@@ -52,7 +52,7 @@ export default function SearchEvent() {
     content = (
       <ul className="events-list">
         {filteredEvents.map((event) => (
-          <li className="event-item" key={event.id}>
+          <li className="event-item" key={event._id}>
             <EventItem event={event} />
           </li>
         ))}
