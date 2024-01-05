@@ -37,14 +37,21 @@ export async function getAllDocuments(
   return documents;
 }
 
-export async function fetchDataBase(client, collection) {
+export async function updateDocument(client, collection, filter, document, options) {
   const db = client.db();
 
-  /**
-   * retrieve all data from the 'comments' collection in
-   * descending order and transform them into an array
-   */
-  const documents = await db.collection(collection);
+  const updatedData = await db
+    .collection(collection)
+    .updateOne(filter, document, options);
 
-  return documents;
+  return updatedData;
 }
+
+export async function deleteDocument(client, collection, filter) {
+  const db = client.db();
+
+  const deletedData = await db.collection(collection).deleteOne(filter);
+
+  return deletedData;
+}
+
