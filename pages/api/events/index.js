@@ -17,7 +17,6 @@ async function handler(req, res) {
       let events = await getAllDocuments(client, 'events', { _id: -1 });
 
       if (search) {
-        console.log(search);
         events = events.filter((event) => {
           const searchableText = `${event.title} ${event.description} ${event.location}`;
           return searchableText.toLowerCase().includes(search.toLowerCase());
@@ -25,7 +24,7 @@ async function handler(req, res) {
       }
 
       if (max) {
-        events = events.slice(events.length - max, events.length);
+        events = events.slice(0, max);
       }
 
       res.status(200).json({ events: events });

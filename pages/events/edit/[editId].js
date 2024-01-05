@@ -2,8 +2,8 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import EditEvent from '../../../components/events/EditEvent';
 import EventDetails from '../../../components/events/EventDetail';
+import { getAllEvents, getEvent, getImages } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
-import { getEvent, getImages, getAllEvents } from '../../../utils/events-utils';
 
 export default function EditEventPage({ event, images, errorEventData }) {
   const [isClient, setIsClient] = useState(false);

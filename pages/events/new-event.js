@@ -9,7 +9,7 @@ import ErrorBlock from '../../components/ui/ErrorBlock';
 import Modal from '../../components/ui/Modal';
 import ModalContext from '../../store/modal-context';
 import NotificationContext from '../../store/notification-context';
-import { getAllEventsLib, getImages } from '../../utils/events-lib';
+import { getAllEvents, getImages } from '../../utils/events-utils';
 
 export default function NewEventPage(props) {
   const modalCtx = useContext(ModalContext);
@@ -113,8 +113,8 @@ export default function NewEventPage(props) {
 
 export async function getServerSideProps() {
   let images = getImages();
-  const events = getAllEventsLib({ max: null, search: null });
-  const lastEvents = getAllEventsLib({ max: 4, search: null });
+  const events = await getAllEvents({ max: null, search: null });
+  const lastEvents = await getAllEvents({ max: 4, search: null });
   let isError = null;
 
   if (!images || !events || !lastEvents) {
@@ -131,8 +131,24 @@ export async function getServerSideProps() {
   return {
     props: {
       imagesFetched: images,
-      events,
-      lastEvents,
+      events: (await events).map((event) => ({
+        id: event._id.toString(),
+        title: event.title,
+        description: event.description,
+        date: event.date,
+        time: event.time,
+        image: event.image,
+        location: event.location,
+      })),
+      lastEvents: (await events).map((event) => ({
+        id: event._id.toString(),
+        title: event.title,
+        description: event.description,
+        date: event.date,
+        time: event.time,
+        image: event.image,
+        location: event.location,
+      })),
     },
   };
 }
