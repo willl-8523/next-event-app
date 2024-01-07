@@ -6,15 +6,17 @@ import useEvents from '../hooks/use-events';
 import ErrorBlock from '../components/ui/ErrorBlock';
 import LoadingIndicator from '../components/ui/LoadingIndicator';
 
-
 export default function HomePage({ events }) {
   const [updateEvents, setUpdateEvents] = useState(events);
   const { data, loading, error } = useEvents({ id: '', url: '/api/events' });
-  console.log({ data, loading });
 
   useEffect(() => {
     if (data) {
-      setUpdateEvents(data.events.slice(0, 4));
+      const dataEvents = data.events.map((item) => ({
+        id: item._id,
+        ...item,
+      }));
+      setUpdateEvents(dataEvents.slice(0, 4));
     }
   }, [data]);
 
@@ -23,8 +25,7 @@ export default function HomePage({ events }) {
       <ErrorBlock
         title="Failed to create event"
         message={
-          error.info?.message ||
-          'Failed to load event. Please try again later'
+          error.info?.message || 'Failed to load event. Please try again later'
         }
       />
     );
