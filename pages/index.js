@@ -1,9 +1,39 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from '../components/home-page/Home';
 import { getAllEvents } from '../utils/events-utils';
+import useEvents from '../hooks/use-events';
+import ErrorBlock from '../components/ui/ErrorBlock';
+import LoadingIndicator from '../components/ui/LoadingIndicator';
+
 
 export default function HomePage({ events }) {
+  const [updateEvents, setUpdateEvents] = useState(events);
+  const { data, loading, error } = useEvents({ id: '', url: '/api/events' });
+  console.log({ data, loading });
+
+  useEffect(() => {
+    if (data) {
+      setUpdateEvents(data.events.slice(0, 4));
+    }
+  }, [data]);
+
+  if (error) {
+    return (
+      <ErrorBlock
+        title="Failed to create event"
+        message={
+          error.info?.message ||
+          'Failed to load event. Please try again later'
+        }
+      />
+    );
+  }
+
+  if (!data && !updateEvents) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <>
       <Head>
@@ -13,14 +43,14 @@ export default function HomePage({ events }) {
           content="Find or add a lot of great events that allow to evolve"
         />
       </Head>
-      <Home lastEvents={events} />
+      <Home lastEvents={updateEvents} />
     </>
   );
 }
 
 export async function getStaticProps() {
   const events = await getAllEvents({ max: 4, searchTerm: null });
-  
+
   if (!events) {
     return {
       notFound: true,
