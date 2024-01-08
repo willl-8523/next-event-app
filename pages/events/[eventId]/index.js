@@ -82,7 +82,7 @@ export default function EventDetailsPage({ event }) {
           <h1>{updatedEvent.title}</h1>
           <nav>
             <button onClick={handleStartDelete}>Delete</button>
-            <Link legacyBehavior href={`/events/edit/${updatedEvent._id}`}>
+            <Link legacyBehavior href={`/events/edit/${event.id}`}>
               <a>Edit</a>
             </Link>
           </nav>
