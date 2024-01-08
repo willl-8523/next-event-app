@@ -38,7 +38,7 @@ export default function EventDetailsPage({ event }) {
   async function handleDelete() {
     try {
       setIsLoadingDelete(true);
-      const response = await fetch(`/api/events/${updatedEvent.id}`, {
+      const response = await fetch(`/api/events/${updatedEvent._id}`, {
         method: 'DELETE',
       });
 
