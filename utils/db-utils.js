@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 
 export async function connectDatabase() {
   const client = await MongoClient.connect(
-    'mongodb+srv://events-data:7Aq44pngQrkAmxYY@$cluster0.55nsvyz.mongodb.net/events-app?retryWrites=true&w=majority&appName=AtlasApp'
+    `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_clustername}.55nsvyz.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority&appName=AtlasApp`
   );
 
   return client;
