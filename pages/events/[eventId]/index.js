@@ -1,19 +1,31 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DeleteEvent from '../../../components/events/DeleteEvent';
 import EventDetails from '../../../components/events/EventDetail';
 import NotificationContext from '../../../store/notification-context';
 import { getAllEvents, getEvent } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
+import useEvents from '../../../hooks/use-events';
 
-export default function EventDetailsPage({ event, error }) {
+export default function EventDetailsPage({ event }) {
   const router = useRouter();
   const notificationCtx = useContext(NotificationContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-  const [isError, setIsError] = useState(error);
+  const [updatedEvent, setUpdatedEvent] = useState(event);
+
+  const { data, loading, error } = useEvents({
+    id: event.id,
+    url: '/api/events',
+  });
+
+  useEffect(() => {
+    if (data) {
+      setUpdatedEvent(data.event[0]);
+    }
+  }, [data]);
 
   function handleStartDelete() {
     setShowDeleteModal(true);
@@ -26,13 +38,12 @@ export default function EventDetailsPage({ event, error }) {
   async function handleDelete() {
     try {
       setIsLoadingDelete(true);
-      const response = await fetch(`/api/events/${event.id}`, {
+      const response = await fetch(`/api/events/${updatedEvent.id}`, {
         method: 'DELETE',
       });
 
       if (!response.ok) {
         const error = await response.json();
-        setIsError(error);
         setIsLoading(false);
       } else {
         router.push('/');
@@ -44,20 +55,19 @@ export default function EventDetailsPage({ event, error }) {
         setIsLoadingDelete(false);
       }
     } catch (error) {
-      setIsError(error);
       setIsLoadingDelete(false);
     }
   }
 
-  if (isError) {
+  if (error) {
     return <ErrorPage statusCode={error} />;
   }
 
   return (
     <>
       <Head>
-        <title>{event.title}</title>
-        <meta name="description" content={event.description} />
+        <title>{updatedEvent.title}</title>
+        <meta name="description" content={updatedEvent.description} />
       </Head>
 
       {showDeleteModal && (
@@ -69,15 +79,15 @@ export default function EventDetailsPage({ event, error }) {
       )}
       <article id="event-details">
         <header>
-          <h1>{event.title}</h1>
+          <h1>{updatedEvent.title}</h1>
           <nav>
             <button onClick={handleStartDelete}>Delete</button>
-            <Link legacyBehavior href={`/events/edit/${event.id}`}>
+            <Link legacyBehavior href={`/events/edit/${updatedEvent._id}`}>
               <a>Edit</a>
             </Link>
           </nav>
         </header>
-        <EventDetails event={event} />
+        <EventDetails event={updatedEvent} />
       </article>
     </>
   );
