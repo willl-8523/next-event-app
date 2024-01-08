@@ -15,9 +15,9 @@ export default function EditEvent({ images, event }) {
   async function handleSubmit(formData) {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/events/${event.id}`, {
+      const response = await fetch(`/api/events/${event._id}`, {
         method: 'PATCH',
-        body: JSON.stringify({ id: event.id, ...formData }),
+        body: JSON.stringify({ id: event._id, ...formData }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -28,7 +28,7 @@ export default function EditEvent({ images, event }) {
         setError(error);
         setIsLoading(false);
       } else {
-        router.push(`/events/${event.id}`);
+        router.push(`/events/${event._id}`);
         setIsLoading(false);
         notificationCtx.showNotification({
           title: 'Success!',
@@ -43,7 +43,7 @@ export default function EditEvent({ images, event }) {
   }
 
   function handleClose() {
-    router.push(`/events/${event.id}`);
+    router.push(`/events/${event._id}`);
   }
 
   let content;
@@ -70,7 +70,7 @@ export default function EditEvent({ images, event }) {
           <>
             <Link
               legacyBehavior
-              href={`/events/${event.id}`}
+              href={`/events/${event._id}`}
               className="button-text"
             >
               <a className="button-text">Cancel</a>

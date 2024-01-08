@@ -4,10 +4,23 @@ import EditEvent from '../../../components/events/EditEvent';
 import EventDetails from '../../../components/events/EventDetail';
 import { getAllEvents, getEvent, getImages } from '../../../utils/events-utils';
 import ErrorPage from '../../_error';
+import useEvents from '../../../hooks/use-events';
 
 export default function EditEventPage({ event, images, errorEventData }) {
   const [isClient, setIsClient] = useState(false);
   const [isError, setIsError] = useState(errorEventData);
+  const [updatedEvent, setUpdatedEvent] = useState(event);
+
+  const { data, loading, error } = useEvents({
+    id: event.id,
+    url: '/api/events',
+  });
+
+  useEffect(() => {
+    if (data) {
+      setUpdatedEvent(data.event[0]);
+    }
+  }, [data]);
 
   useEffect(() => {
     setIsClient(true);
@@ -21,13 +34,10 @@ export default function EditEventPage({ event, images, errorEventData }) {
     <>
       <Head>
         <title>{event.title}</title>
-        <meta
-          name="description"
-          content={`Edit ${event.description}`}
-        />
+        <meta name="description" content={`Edit ${updatedEvent.description}`} />
       </Head>
-      {isClient && <EditEvent images={images} event={event} />}
-      <EventDetails event={event} error={isError} />
+      {isClient && <EditEvent images={images} event={updatedEvent} />}
+      <EventDetails event={updatedEvent} error={isError} />
     </>
   );
 }
